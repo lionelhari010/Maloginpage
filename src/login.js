@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [toggleIcon, setToggleIcon] = useState(false);
   const navigate = useNavigate();
+  const refInp = useRef();
   const usernameHandler = (event) => {
     setUserName(event.target.value);
   };
@@ -17,11 +19,20 @@ const Login = () => {
       navigate("/home");
     }
   };
+  const showPass = () => {
+    if (refInp.current.type == "password" && refInp.current.value.length >= 1) {
+      refInp.current.type = "text";
+      setToggleIcon(true);
+    } else {
+      refInp.current.type = "password";
+      setToggleIcon(false);
+    }
+  };
   return (
     <div>
       <div className="flex w-full">
         {/* Left side */}
-        <div className="flex bg-white rounded-lg md:ml-2 md:px-12 flex-col pt-16 w-full md:w-1/2">
+        <div className="flex bg-white rounded-lg md:ml-2 md:px-12 flex-col pt-9 w-full md:w-1/2">
           {/* Logo */}
           <div className="w-56 mx-auto md:mx-0">
             <img src="https://res.cloudinary.com/duwkxxbeh/image/upload/v1667819859/main-logo_img_kfuvh2.png"></img>
@@ -30,7 +41,7 @@ const Login = () => {
             <h2 className="font-bold mb-6 text-center md:text-left text-2xl">
               Artwork Management System
             </h2>
-            <p className="mb-16 w-2/3 mx-auto md:mx-0 leading-7">
+            <p className="mb-12 w-2/3 mx-auto text-center md:text-left md:mx-0 leading-7">
               End-to-End Packaging and Artwork Management platform for
               <span className="px-1 font-bold text-md text-orange-500">
                 Pharma & CPG
@@ -39,14 +50,15 @@ const Login = () => {
             </p>
           </div>
           {/* input field */}
-          <div className="flex mx-auto md:mx-0 space-x-28">
+          <div className="flex mx-auto flex-col w-80 md:w-full">
             <div className="flex flex-col">
-              <label htmlFor="" className="font-medium mb-2">
+              <label htmlFor="email" className="font-medium mb-0.5">
                 Username
               </label>
               <input
                 type="email"
-                className="border peer border-slate-200  focus:invalid:border-red-500 valid:border-green-500  bg-slate-100 p-3 rounded-lg mt-2 outline-none"
+                id="email"
+                className="border peer border-slate-200  focus:invalid:border-red-500 valid:border-green-500  bg-slate-100 p-3 rounded-lg outline-none"
                 onChange={usernameHandler}
                 value={username}
                 placeholder="name@company.com"
@@ -57,27 +69,68 @@ const Login = () => {
               </p>
             </div>
 
-            <div className="flex flex-col">
-              <label htmlFor="" className="font-medium mb-2">
+            <div className="flex flex-col relative">
+              <label htmlFor="password" className="font-medium mb-0.5">
                 Password
               </label>
+
               <input
                 type="password"
-                min={1}
-                max={6}
-                className="border peer bg-slate-100 out-of-range:border-green-500 focus:in-range:border-red-500  p-3 rounded-lg mt-2 outline-none"
+                ref={refInp}
+                id="password"
+                className="border peer bg-slate-100  valid:border-green-500 focus:invalid:border-red-500  p-3 rounded-lg  outline-none"
                 onChange={passwordHandler}
                 value={password}
                 placeholder="Enter password"
                 required
               />
+              <span onClick={showPass} className=" absolute right-6 top-10 w-6">
+                {toggleIcon && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 stroke-gray-400"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                    />
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                )}
+                {!toggleIcon && (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 stroke-gray-400"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"
+                    />
+                  </svg>
+                )}
+              </span>
+
               <p class="mt-2 invisible peer-focus:peer-invalid:visible text-pink-600 text-sm">
                 Please provide a valid password.
               </p>
             </div>
           </div>
           {/* Forget pass */}
-          <div className="flex md:mt-16 mt-10 mx-auto md:mx-0 md:space-x-64 space-x-60 ">
+          <div className="flex md:mt-9 mt-10 mx-auto space-x-20 md:space-x-0 md:mx-0 justify-between ">
             <div className="flex items-center space-x-2">
               <input
                 type="checkbox"
@@ -99,18 +152,18 @@ const Login = () => {
             </div>
           </div>
           {/* Sign btn */}
-          <div className="mb-12">
+          <div className="mx-20 md:mx-0 mb-12">
             <button
               onClick={submitHandler}
-              className="bg-blue-700 md:mx-0 mx-4  font-medium py-3 rounded-xl md:w-4/5 w-full mt-20  text-white"
+              className="bg-blue-700 hover:bg-blue-500 shadow-md   font-medium py-3 rounded-xl w-full mt-20  text-white"
             >
-              Sign in to your account
+              Sign in
             </button>
           </div>
         </div>
 
         {/*  Right side */}
-        <div className="w-1/2 hidden md:block max-h-full">
+        <div className="w-1/2 border-l-2 border-l-gray-200 hidden md:block max-h-full">
           <img
             src="https://res.cloudinary.com/duwkxxbeh/image/upload/v1667820448/bg-imgart_i44lqs.png"
             alt=""
