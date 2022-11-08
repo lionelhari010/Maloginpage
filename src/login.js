@@ -32,7 +32,7 @@ const Login = () => {
     <div>
       <div className="flex w-full">
         {/* Left side */}
-        <div className="flex bg-white rounded-lg md:ml-2 md:px-12 flex-col pt-9 w-full md:w-1/2">
+        <div className="flex bg-white mr-2 shadow-md shadow-slate-600 md:px-12 flex-col pt-9 w-full md:w-1/2">
           {/* Logo */}
           <div className="w-56 mx-auto md:mx-0">
             <img src="https://res.cloudinary.com/duwkxxbeh/image/upload/v1667819859/main-logo_img_kfuvh2.png"></img>
@@ -41,7 +41,7 @@ const Login = () => {
             <h2 className="font-bold mb-6 text-center md:text-left text-2xl">
               Artwork Management System
             </h2>
-            <p className="mb-12 w-2/3 mx-auto text-center md:text-left md:mx-0 leading-7">
+            <p className="mb-9 w-2/3 mx-auto text-center md:text-left md:mx-0 leading-7">
               End-to-End Packaging and Artwork Management platform for
               <span className="px-1 font-bold text-md text-orange-500">
                 Pharma & CPG
@@ -84,6 +84,7 @@ const Login = () => {
                 placeholder="Enter password"
                 required
               />
+              {/* eye icon */}
               <span onClick={showPass} className=" absolute right-6 top-10 w-6">
                 {toggleIcon && (
                   <svg
@@ -129,21 +130,26 @@ const Login = () => {
               </p>
             </div>
           </div>
+          {/* block ads */}
+          <div className="flex items-center gap-1">
+            <p htmlFor="" className="  text-gray-400">
+              A popup blocker was detected. Please turn it off to use this
+              application
+            </p>
+            <img
+              className="w-4 h-4"
+              src="https://res.cloudinary.com/duwkxxbeh/image/upload/v1667912056/no-drop_emhzry.png"
+            />
+          </div>
           {/* Forget pass */}
           <div className="flex md:mt-9 mt-10 mx-auto space-x-20 md:space-x-0 md:mx-0 justify-between ">
             <div className="flex items-center space-x-2">
-              <input
+              {/* <input
                 type="checkbox"
                 className="w-4 h-4 cursor-pointer accent-blue-500"
                 name=""
                 id="remember"
-              />
-              <label
-                htmlFor="remember"
-                className="text-gray-400 cursor-pointer"
-              >
-                Remember Me
-              </label>
+              /> */}
             </div>
             <div>
               <a href="#" className="text-blue-500 font-medium md:ml-4">
@@ -152,10 +158,10 @@ const Login = () => {
             </div>
           </div>
           {/* Sign btn */}
-          <div className="mx-20 md:mx-0 mb-12">
+          <div className="flex justify-center mx-20 md:mx-0 mb-12">
             <button
               onClick={submitHandler}
-              className="bg-blue-700 hover:bg-blue-500 shadow-md   font-medium py-3 rounded-xl w-full mt-20  text-white"
+              className="bg-blue-700 hover:bg-blue-500 shadow-md font-medium py-3 rounded-xl w-32 mt-20  text-white"
             >
               Sign in
             </button>
@@ -163,7 +169,7 @@ const Login = () => {
         </div>
 
         {/*  Right side */}
-        <div className="w-1/2 border-l-2 border-l-gray-200 hidden md:block max-h-full">
+        <div className="w-1/2  hidden md:block max-h-full">
           <img
             src="https://res.cloudinary.com/duwkxxbeh/image/upload/v1667820448/bg-imgart_i44lqs.png"
             alt=""
